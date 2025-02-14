@@ -70,6 +70,7 @@ def RegThree(page=1):
         "Jaconda",
         "Quiettt",
         "Alien",
+        "Merch",
     ]
 
     if page == 1:

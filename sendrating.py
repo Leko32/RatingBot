@@ -1,11 +1,13 @@
-from datetime import datetime, timedelta, time
-import pytz
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import SQLAlchemyError
-from aiogram import Bot
-from database import engine, User, Balance
-import os
 import logging
+import os
+from datetime import datetime, time, timedelta
+
+import pytz
+from aiogram import Bot
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import sessionmaker
+
+from database import Balance, User, engine
 
 URL = os.getenv("URL")
 CHAT_ID = os.getenv("CHAT_ID")
@@ -49,8 +51,8 @@ async def send_rating():
     users = session.query(User).all()
     rating_message = "<b>🔥Рейтинг операторов🔥</b>\n\n"
     user_balances = []
-    start_time = time(3, 0)
-    end_time = time(3, 0)
+    start_time = time(9, 0)
+    end_time = time(9, 0)
     previous_day = get_previous_day_kyiv()
     today = get_today_kyiv()
 
@@ -108,8 +110,8 @@ async def send_admin_rating():
         session.query(User.admin_nickname, User.top_admin, User.site).distinct().all()
     )
     admin_balances = {}
-    start_time = time(3, 0)
-    end_time = time(3, 0)
+    start_time = time(9, 0)
+    end_time = time(9, 0)
     previous_day = get_previous_day_kyiv()
     today = get_today_kyiv()
 
@@ -160,8 +162,8 @@ async def send_top_admin_rating():
     start_time = datetime.now()
     top_admins = session.query(User.top_admin).distinct().all()
     top_admin_balances = {}
-    start_time = time(3, 0)
-    end_time = time(3, 0)
+    start_time = time(9, 0)
+    end_time = time(9, 0)
     previous_day = get_previous_day_kyiv()
     today = get_today_kyiv()
 
@@ -234,8 +236,8 @@ async def send_weekly_rating():
     users = session.query(User).all()
     rating_message = "<b>🔥Еженедельный рейтинг операторов🔥</b>\n\n"
     user_balances = []
-    start_time = time(3, 0)
-    end_time = time(3, 0)
+    start_time = time(9, 0)
+    end_time = time(9, 0)
     week_start = get_week_start_kyiv()
     today = get_today_kyiv()
 
@@ -297,8 +299,8 @@ async def send_weekly_admin_rating():
         session.query(User.admin_nickname, User.top_admin, User.site).distinct().all()
     )
     admin_balances = {}
-    start_time = time(3, 0)
-    end_time = time(3, 0)
+    start_time = time(9, 0)
+    end_time = time(9, 0)
     week_start = get_week_start_kyiv()
     today = get_today_kyiv()
 
@@ -353,8 +355,8 @@ async def send_weekly_top_admin_rating():
     start_time = datetime.now()
     top_admins = session.query(User.top_admin).distinct().all()
     top_admin_balances = {}
-    start_time = time(3, 0)
-    end_time = time(3, 0)
+    start_time = time(9, 0)
+    end_time = time(9, 0)
     week_start = get_week_start_kyiv()
     today = get_today_kyiv()
 

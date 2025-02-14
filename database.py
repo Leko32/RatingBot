@@ -70,6 +70,7 @@ top_admins = {
     "Jaconda": "Deadpool",
     "Quiettt": "Stern",
     "Alien": "Stern",
+    "Merch": "Stern",
 }
 
 

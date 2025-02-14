@@ -1,38 +1,34 @@
-import os
 import asyncio
-import re
 import logging
+import os
+import re
+from datetime import datetime, time, timedelta
+import pytz
 from aiogram import Bot, Dispatcher, types
-from aiogram.types import Message
 from aiogram.filters import Command
 from aiogram.fsm.storage.memory import MemoryStorage
-from dotenv import load_dotenv
-from keyboards import RegSecond, RegThree, Main, RegFive, RegShift, RegShiftLF
-from sqlalchemy.orm import sessionmaker
-from database import engine, User, Balance, add_user, top_admins
+from aiogram.types import Message
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from datetime import datetime, timedelta, time
-import pytz
+from dotenv import load_dotenv
 from sqlalchemy.exc import SQLAlchemyError
-from sendrating import (
-    send_rating,
-    send_admin_rating,
-    send_top_admin_rating,
-    send_weekly_rating,
-    send_weekly_admin_rating,
-    send_weekly_top_admin_rating,
-)
-from send_logs import log_restart
+from sqlalchemy.orm import sessionmaker
+
+from database import Balance, User, add_user, engine, top_admins
+from keyboards import Main, RegFive, RegSecond, RegShift, RegShiftLF, RegThree
 from notify_group import notify_group
+from send_logs import log_restart
+from sendrating import (send_admin_rating, send_rating, send_top_admin_rating,
+                        send_weekly_admin_rating, send_weekly_rating,
+                        send_weekly_top_admin_rating)
 
 load_dotenv()
 
 # bot.log - иформация детальная о боте
 # detailed.log - информация о перезапуске бота
 
-URL = os.getenv("URL")
-CHAT_ID = os.getenv("CHAT_ID")
-API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
+URL = os.getenv("URL") or ""
+CHAT_ID = os.getenv("CHAT_ID") or ""
+API_TOKEN = os.getenv("TELEGRAM_API_TOKEN") or ""
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
@@ -463,21 +459,21 @@ async def handle_registered_user_message(message: Message):
 async def main():
     try:
         scheduler.add_job(
-            send_rating, "cron", hour=23, minute=3, second=0, timezone="Europe/Kiev"
+            send_rating, "cron", hour=9, minute=15, second=0, timezone="Europe/Kiev"
         )
         scheduler.add_job(
             send_admin_rating,
             "cron",
-            hour=23,
-            minute=3,
+            hour=9,
+            minute=16,
             second=20,
             timezone="Europe/Kiev",
         )
         scheduler.add_job(
             send_top_admin_rating,
             "cron",
-            hour=23,
-            minute=3,
+            hour=9,
+            minute=17,
             second=40,
             timezone="Europe/Kiev",
         )
@@ -485,8 +481,8 @@ async def main():
             send_weekly_rating,
             "cron",
             day_of_week="mon",
-            hour=23,
-            minute=4,
+            hour=9,
+            minute=2,
             second=0,
             timezone="Europe/Kiev",
         )
@@ -494,8 +490,8 @@ async def main():
             send_weekly_admin_rating,
             "cron",
             day_of_week="mon",
-            hour=23,
-            minute=4,
+            hour=9,
+            minute=5,
             second=20,
             timezone="Europe/Kiev",
         )
@@ -503,8 +499,8 @@ async def main():
             send_weekly_top_admin_rating,
             "cron",
             day_of_week="mon",
-            hour=23,
-            minute=4,
+            hour=9,
+            minute=10,
             second=40,
             timezone="Europe/Kiev",
         )
