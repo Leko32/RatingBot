@@ -63,7 +63,7 @@ This **Telegram bot** is designed for user registration, tracking operator balan
 ### 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/telegram-rating-bot.git
+git clone https://github.com/yourusername/RatingBot.git
 ```
 
 ### 2. Install dependencies:
